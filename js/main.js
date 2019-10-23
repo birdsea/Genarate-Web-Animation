@@ -3,44 +3,28 @@
 var params = {
   frameRate : 10,
   color: '#20108f',
-  step: 10,
+  distance: 10,
   size: 5,
   shape: 1,
   random: 0
 }
 
 var canv = null;
-var code = '';
+var code = null;
+var editor_div = null;
 var editor = null;
 
 function setup() {
-  // canv = createCanvas(windowWidth, windowHeight / 2);
-  canv = createCanvas(windowWidth, windowHeight);
+
+  // canvas
+  canv = createCanvas(windowWidth, windowHeight - 56);
   canv.style('position', 'absolute');
-  // canv.style('top', '56px');
-  canv.style('top', '0px');
+  canv.style('top', '56px');
   canv.style('left', '0px');
 
+  // pane
   const pane = new Tweakpane({
     title: 'parameter',
-  });
-
-  pane.addInput(params, 'frameRate', {
-    step: 10,
-    min : 10,
-    max : 255
-  });
-
-  pane.addInput(params, 'color');
-
-  pane.addInput(params, 'step', {
-    min : 10,
-    max : 255
-  });
-
-  pane.addInput(params, 'size', {
-    min : 1,
-    max : 255
   });
 
   pane.addInput(params, 'shape', {
@@ -51,26 +35,49 @@ function setup() {
     }
   });
 
-  pane.addInput(params, 'random', {
+  pane.addInput(params, 'color');
+
+  pane.addInput(params, 'size', {
+    min : 1,
+    max : 255
+  });
+
+  pane.addInput(params, 'distance', {
+    min : 10,
+    max : 255
+  });
+
+  const f1 = pane.addFolder({
+    title: 'animation',
+  });
+
+  f1.addInput(params, 'random', {
     min : 0,
     max : 255
   });
 
+  f1.addInput(params, 'frameRate', {
+    step: 10,
+    min : 10,
+    max : 255
+  });
+
   // Editor
-  var editor_div = createElement('div');
+  editor_div = createElement('div');
   editor_div.id('editor');
   editor_div.style('position', 'absolute');
   editor_div.style('left', '0px');
-  editor_div.style('top', windowHeight / 2 + 'px');
+  editor_div.style('top', windowHeight / 2 + 56 + 'px');
   editor_div.style('width', windowWidth + 'px');
-  editor_div.style('height', windowHeight / 2 + 'px');
-  editor_div.style('display', 'none');
+  editor_div.style('height', windowHeight / 2 - 56 + 'px');
 
   editor = ace.edit("editor");
-  // editor.setTheme("ace/theme/theme-solarized_light");
+  editor.setTheme("ace/theme/clouds");
   editor.session.setMode("ace/mode/html");
   editor.setReadOnly(true);
-  editor.renderer.$cursorLayer.element.style.display = "none";
+  editor.renderer.$cursorLayer.element.style.display = "none"
+
+  editor_div.style('display', 'none');
 
   // Initial Canvas Setting
   noStroke();
@@ -81,25 +88,25 @@ function setup() {
 function draw() {
   background(255);
 
-  var step = params.step;
+  var distance = params.distance;
   var size = params.size;
   colorChange(params.color);
 
-  for (let x = 0; x <= windowWidth; x += step) {
-    for (let y = 0; y <= windowHeight; y += step) {
-      const d = random(params.random);
+  for (let x = 0; x <= windowWidth; x += distance) {
+    for (let y = 0; y <= windowHeight; y += distance) {
+      const r = random(params.random);
       switch(params.shape) {
         case 1:
-          ellipse(x + d, y + d, size, size);
+          ellipse(x + r, y + r, size, size);
           break;
         case 2:
-          square(x + d, y + d, size);
+          square(x + r, y + r, size);
           break;
         case 3:
-          triangle(x + d, y + d + size / 2, x + d + size / 2, y + d, x + size, y + d + size / 2);
+          triangle(x + r, y + r + size / 2, x + r + size / 2, y + r, x + size, y + r + size / 2);
           break;
         default:
-          ellipse(x + d, y + d, size, size);
+          ellipse(x + r, y + r, size, size);
       }
     }
   }
@@ -117,7 +124,7 @@ function colorChange(color) {
 }
 
 function setCode(){
-  var code = `<!DOCTYPE html>
+  code = `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -142,25 +149,25 @@ function setCode(){
     function draw() {
       background(255);
 
-      var step = ${params.step};
+      var distance = ${params.distance};
       var size = ${params.size};
       colorChange('${params.color}');
 
-      for (let x = 0; x <= windowWidth; x += step) {
-        for (let y = 0; y <= windowHeight; y += step) {
-          const d = random(${params.random});
+      for (let x = 0; x <= windowWidth; x += distance) {
+        for (let y = 0; y <= windowHeight; y += distance) {
+          const r = random(${params.random});
           switch(${params.shape}) {
             case 1:
-              ellipse(x + d, y + d, size, size);
+              ellipse(x + r, y + r, size, size);
               break;
             case 2:
-              square(x + d, y + d, size);
+              square(x + r, y + r, size);
               break;
             case 3:
-              triangle(x + d, y + d + size / 2, x + d + size / 2, y + d, x + size, y + d + size / 2);
+              triangle(x + r, y + r + size / 2, x + r + size / 2, y + r, x + size, y + r + size / 2);
               break;
             default:
-              ellipse(x + d, y + d, size, size);
+              ellipse(x + r, y + r, size, size);
           }
         }
       }
@@ -178,4 +185,27 @@ function setCode(){
 </html>`;
   editor.setValue(code);
   editor.selection.clearSelection();
+}
+
+function toggleSource(){
+  if (editor_div.style('display') == 'block') {
+    editor_div.style('display', 'none');
+  } else {
+    editor_div.style('display', 'block');
+  }
+}
+
+function downloadHtml() {
+    var downLoadLink = document.createElement("a");
+    downLoadLink.download = "web_animation.html";
+
+    var blob = new Blob([ code ], { "type" : "text/plain" });
+
+    if (window.navigator.msSaveBlob) {
+        window.navigator.msSaveBlob(blob, "web_animation.html");
+        window.navigator.msSaveOrOpenBlob(blob, "web_animation.html");
+    } else {
+        downLoadLink.href = window.URL.createObjectURL(blob);
+    }
+    downLoadLink.click();
 }

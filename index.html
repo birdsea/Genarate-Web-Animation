@@ -3,13 +3,66 @@
   <head>
     <meta charset="utf-8">
     <title>Genarate Web Animation</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tweakpane@1.1.0/dist/tweakpane.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-html.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/snippets/html.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ext-static_highlight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/theme-clouds.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+    .tp-dfwv {
+      top : initial !important;
+    }
+    .home {
+      color:#bdf5ff;
+    }
+    .home:hover {
+      color:#08c5a9;
+    }
+    .downloadButton {
+      color:#bdf5ff;
+      border-color:#bdf5ff;
+      background-color: #000000;
+    }
+    .downloadButton:hover {
+      color:#08c5a9;
+      border-color:#08c5a9;
+      background-color: #000000;
+    }
+    .downloadButton:active {
+      color:#08c5a9;
+      border-color:#08c5a9;
+      background-color: #ffffff;
+    }
+    </style>
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg" style="background-color:#000000;">
+      <a class="navbar-brand home" href=".">
+       Generate Web Animation
+      </a>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <button class="btn my-2 my-sm-0 downloadButton" onclick="downloadHtml()" type="button">Download</button>
+          </li>
+          <!--li class="nav-item divider-vertical" style="color:#000000;">
+            <label>|</label>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-info my-2 my-sm-0" onclick="toggleSource();" style="color:#8d80eb;border-color:#8d80eb;" type="button">Source</button>
+          </li-->
+        </ul>
+      </div>
+    </nav>
     <script src="./js/main.js"></script>
   </body>
 </html>
