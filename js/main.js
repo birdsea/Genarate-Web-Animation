@@ -2,7 +2,7 @@
 
 var params = {
   frameRate : 10,
-  color: '#20108f',
+  color: '#201952',
   distance: 10,
   size: 5,
   shape: 1,
